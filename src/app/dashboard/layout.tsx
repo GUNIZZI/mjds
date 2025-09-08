@@ -1,21 +1,32 @@
-import { getCurrentUser } from '@/core/action/auth/firebase';
-import { cookies } from 'next/headers';
+import { getCurrentUser, signOut } from '@/core/action/auth/firebase';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
 interface OwnProps {
     children: ReactNode;
 }
-export default async function NotProtectedLayout({ children }: OwnProps) {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('firebase-token');
-
-    console.log('=== NotProtectedLayout Debug ===');
-    console.log('쿠키 토큰 존재:', !!token);
-    console.log('토큰 값:', token?.value ? '토큰 있음' : '토큰 없음');
-
+export default async function Layout({ children }: OwnProps) {
     const user = await getCurrentUser();
-    console.log('getCurrentUser 결과:', user);
-    console.log('==============================');
+    const { email } = user;
 
-    return <>{children}</>;
+    const hndlSignOut = async () => {
+        'use server';
+        await signOut();
+        redirect('/login');
+    };
+
+    return (
+        <>
+            <header className={'sticky top-0 w-full h-16 px-5 bg-white/10 backdrop-blur-sm shadow-lg/5 flex justify-between items-center'}>
+                <h1>MinJi Design System</h1>
+                <div className="flex gap-2 text-sm">
+                    <span>{email}님</span>
+                    <button type="button" onClick={hndlSignOut}>
+                        로그아웃
+                    </button>
+                </div>
+            </header>
+            <div className="h-500">{children}</div>
+        </>
+    );
 }

@@ -32,7 +32,10 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Login</h2>
+                    <h2 className="flex flex-col flex-nowrap justify-center items-center mt-6 text-center text-4xl font-extrabold text-gray-900 leading-6">
+                        <span className="font-extralight text-lg text-gray-400">MJ Design System</span>
+                        Login
+                    </h2>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{error}</div>}

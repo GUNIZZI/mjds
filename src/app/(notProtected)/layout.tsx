@@ -1,5 +1,4 @@
 import { getCurrentUser } from '@/core/action/auth/firebase';
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
